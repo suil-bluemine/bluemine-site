@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const services = [
   {
     icon: (
@@ -37,22 +39,52 @@ const services = [
   },
 ];
 
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+const headerVariant = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
 export default function Services() {
   return (
     <section id="services" className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
+        <motion.div
+          variants={headerVariant}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+          className="text-center mb-14"
+        >
           <p className="text-[#2563eb] font-semibold text-sm uppercase tracking-widest mb-2">Services</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1a2e4a]">
             기업 IT의 모든 것을 해결합니다
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch"
+        >
           {services.map((svc) => (
-            <div
+            <motion.div
               key={svc.title}
-              className={`relative rounded-2xl p-8 flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
+              variants={cardVariant}
+              whileHover={{ y: -8 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className={`relative rounded-2xl p-8 flex flex-col hover:shadow-xl ${
                 svc.highlight
                   ? 'bg-[#1a2e4a] text-white shadow-2xl shadow-[#1a2e4a]/30 ring-2 ring-[#2563eb]'
                   : 'bg-white text-[#1a2e4a] border border-gray-100 shadow-md'
@@ -80,16 +112,16 @@ export default function Services() {
               <ul className="space-y-2">
                 {svc.items.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm">
-                    <svg className={`w-4 h-4 flex-shrink-0 ${svc.highlight ? 'text-[#2563eb]' : 'text-[#2563eb]'}`} fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 flex-shrink-0 text-[#2563eb]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span className={svc.highlight ? 'text-white/80' : 'text-gray-600'}>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

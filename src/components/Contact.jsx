@@ -1,17 +1,35 @@
+import { motion } from 'framer-motion';
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariant = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
 export default function Contact() {
   return (
     <section id="contact" className="py-20 bg-[#1a2e4a]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-2">Contact</p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+          className="max-w-2xl mx-auto text-center"
+        >
+          <motion.p variants={itemVariant} className="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-2">Contact</motion.p>
+          <motion.h2 variants={itemVariant} className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             연락처
-          </h2>
-          <p className="text-white/60 text-base sm:text-lg mb-12">
+          </motion.h2>
+          <motion.p variants={itemVariant} className="text-white/60 text-base sm:text-lg mb-12">
             IT 유지보수 도입을 검토 중이시라면<br />언제든지 문의해 주세요
-          </p>
+          </motion.p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+          <motion.div variants={itemVariant} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
             {/* Email */}
             <a
               href="mailto:sale1@bluemine.co.kr"
@@ -45,18 +63,23 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <a
-            href="mailto:sale1@bluemine.co.kr"
-            className="inline-flex items-center gap-2 bg-[#2563eb] hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-lg text-base transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            이메일 문의하기
-          </a>
-        </div>
+          <motion.div variants={itemVariant}>
+            <motion.a
+              href="mailto:sale1@bluemine.co.kr"
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="inline-flex items-center gap-2 bg-[#2563eb] hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-lg text-base transition-colors duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              이메일 문의하기
+            </motion.a>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Footer */}

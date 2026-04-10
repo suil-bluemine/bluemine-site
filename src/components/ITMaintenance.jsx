@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const items = [
   {
     icon: (
@@ -55,11 +57,32 @@ const items = [
   },
 ];
 
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+const headerVariant = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
 export default function ITMaintenance() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
+        <motion.div
+          variants={headerVariant}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+          className="text-center mb-14"
+        >
           <p className="text-[#2563eb] font-semibold text-sm uppercase tracking-widest mb-2">IT Integrated Maintenance</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1a2e4a] mb-4">
             IT 관리자가 없는 회사를 위한<br />
@@ -68,22 +91,31 @@ export default function ITMaintenance() {
           <p className="text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">
             중소규모 회사에서 IT 담당자 없이 겪는 모든 어려움을 해결합니다
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {items.map((item) => (
-            <div
+            <motion.div
               key={item.title}
-              className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+              variants={cardVariant}
+              whileHover={{ y: -8 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md"
             >
               <div className="w-12 h-12 bg-[#f0f4ff] text-[#2563eb] rounded-xl flex items-center justify-center mb-4">
                 {item.icon}
               </div>
               <h3 className="text-base font-bold text-[#1a2e4a] mb-2">{item.title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

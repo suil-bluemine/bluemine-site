@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const reasons = [
   {
     icon: (
@@ -28,31 +30,61 @@ const reasons = [
   },
 ];
 
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+const headerVariant = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
 export default function WhyBluemine() {
   return (
     <section id="why" className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
+        <motion.div
+          variants={headerVariant}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+          className="text-center mb-14"
+        >
           <p className="text-[#2563eb] font-semibold text-sm uppercase tracking-widest mb-2">Why BLUEMINE</p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1a2e4a]">
             왜 블루마인인가
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-50px' }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {reasons.map((r) => (
-            <div
+            <motion.div
               key={r.title}
-              className="group text-center p-8 rounded-2xl border border-gray-100 hover:border-[#2563eb]/20 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+              variants={cardVariant}
+              whileHover={{ y: -8 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="group text-center p-8 rounded-2xl border border-gray-100 hover:border-[#2563eb]/20 hover:shadow-lg"
             >
               <div className="w-16 h-16 bg-[#f0f4ff] text-[#2563eb] rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:bg-[#2563eb] group-hover:text-white transition-colors duration-200">
                 {r.icon}
               </div>
               <h3 className="text-lg font-bold text-[#1a2e4a] mb-3">{r.title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{r.desc}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
